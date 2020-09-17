@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using WebBoxOffice.Models;
+using WebBoxOffice.Domain;
 
 namespace WebBoxOffice.Data
 {
