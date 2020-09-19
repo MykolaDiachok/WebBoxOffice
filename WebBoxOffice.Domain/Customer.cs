@@ -1,37 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebBoxOffice.Domain
 {
     /// <summary>
-    /// 
+    /// Customer
     /// </summary>
-    [Table("BoxOffices")]
-    public class BoxOffice
+    [Table("Customers")]
+    public class Customer
     {
         /// <summary>
-        /// 
+        /// Id
         /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
+        [Column(TypeName = "nvarchar(450)")]
         [Required]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Name
+        /// </summary>
         [Column(TypeName = "nvarchar(256)")]
+        [Required]
         public string Name { get; set; }
+
         /// <summary>
-        /// 
+        /// Surname
         /// </summary>
-        [Column(TypeName = "nvarchar(MAX)")]
-        public string Description { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public ICollection<Hall> Halls { get; set; }
+        [Column(TypeName = "nvarchar(256)")]
+        [Required]
+        public string Surname { get; set; }
+
+
+        
         /// <summary>
         /// LastUpdated - last create or change date
         /// </summary>

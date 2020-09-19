@@ -6,42 +6,36 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebBoxOffice.Domain
 {
     /// <summary>
-    /// Spectacle
+    /// Customer Tickets
     /// </summary>
-    [Table("Spectacles")]
-    public class Spectacle
+    [Table("CustomerTickets")]
+    public class CustomerTickets
     {
         /// <summary>
-        /// 
+        /// Id
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        /// <summary>
-        /// Name
-        /// </summary>
-        [Column(TypeName = "nvarchar(1024)")]
-        public string Name { get; set; }
 
         /// <summary>
-        /// ShortDescription
+        /// Customer
         /// </summary>
-        [Column(TypeName = "nvarchar(1024)")]
-        public string ShortDescription { get; set; }
+        public Customer Customer { get; set; }
         /// <summary>
-        /// Description
+        /// Tickets
         /// </summary>
-        [Column(TypeName = "nvarchar(MAX)")]
-        public string Description { get; set; }
-        /// <summary>
-        /// Spectacle - Duration in minutes
-        /// </summary>
-        public int Duration { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
 
         /// <summary>
-        /// SpectacleLinks
+        /// Date of sale ticket
         /// </summary>
-        public ICollection<SpectaclesLinks> SpectacleLinks { get; set; }
+        public DateTime? DateOfSale { get; set; }
+
+        /// <summary>
+        /// Sold price
+        /// </summary>
+        public decimal SoldPrice { get; set; }
         /// <summary>
         /// LastUpdated - last create or change date
         /// </summary>
@@ -52,5 +46,6 @@ namespace WebBoxOffice.Domain
         /// </summary>
         [Timestamp]
         public byte[] Timestamp { get; set; }
+
     }
 }

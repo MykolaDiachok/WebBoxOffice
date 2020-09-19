@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using WebBoxOffice.Data;
 using WebBoxOffice.Identity.Data;
 using WebBoxOffice.Identity.Models;
 
@@ -65,6 +66,10 @@ namespace WebBoxOffice
                 options.UseSqlServer(
                     Configuration.GetConnectionString("IdentityConnection")));
 
+            services.AddDbContext<WebBoxOfficeDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("WebBoxOfficeConnection")));
+
             services.AddDefaultIdentity<WebBoxOfficeUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<WebBoxOfficeRole>()
                 .AddEntityFrameworkStores<WebBoxOfficeIdentityDbContext>();
@@ -89,15 +94,22 @@ namespace WebBoxOffice
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        /// <param name="identityDbContext"></param>
         /// <param name="logger"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
-            WebBoxOfficeIdentityDbContext identityDbContext, ILogger<Startup> logger)
+        /// <param name="identityDbContext"></param>
+        /// <param name="boxOfficeDbContext"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger,
+            WebBoxOfficeIdentityDbContext identityDbContext, WebBoxOfficeDbContext boxOfficeDbContext)
         {
             if (!((RelationalDatabaseCreator) identityDbContext.Database.GetService<IDatabaseCreator>()).Exists())
             {
                 logger.LogInformation("Identity Database not found, will create new...");
                 identityDbContext.Database.EnsureCreated();
+            }
+
+            if (!((RelationalDatabaseCreator) boxOfficeDbContext.Database.GetService<IDatabaseCreator>()).Exists())
+            {
+                logger.LogInformation("Database not found, will create new...");
+                boxOfficeDbContext.Database.EnsureCreated();
             }
             app.UseSwagger();
             app.UseSwaggerUI(c =>

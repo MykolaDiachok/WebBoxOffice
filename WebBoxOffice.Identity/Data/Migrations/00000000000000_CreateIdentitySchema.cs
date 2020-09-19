@@ -8,6 +8,10 @@ namespace WebBoxOffice.Identity.Data.Migrations
     /// </summary>
     public partial class CreateIdentitySchema : Migration
     {
+        /// <summary>
+        /// Up
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -250,6 +254,10 @@ namespace WebBoxOffice.Identity.Data.Migrations
                 columns: new[] { "SubjectId", "ClientId", "Type" });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

@@ -7,7 +7,7 @@ using WebBoxOffice.Identity.Models;
 namespace WebBoxOffice.Identity.Data
 {
     /// <summary>
-    /// main class db context for identity
+    /// class WebBoxOfficeIdentityDbContext
     /// </summary>
     public class WebBoxOfficeIdentityDbContext : ApiAuthorizationDbContext<WebBoxOfficeUser>
     {
@@ -20,15 +20,6 @@ namespace WebBoxOffice.Identity.Data
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
-        }
-
-        /// <summary>
-        /// OnModelCreating
-        /// </summary>
-        /// <param name="builder"></param>
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
         }
     }
 }

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 
 namespace WebBoxOffice.Domain
 {
     /// <summary>
-    /// Spectacles schedules
+    /// SpectaclesLinks
     /// </summary>
-    [Table("Schedules")]
-    public class Schedule
+    [Table("SpectaclesLinks")]
+    public class SpectaclesLinks
     {
         /// <summary>
         /// Id
@@ -17,57 +18,28 @@ namespace WebBoxOffice.Domain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Required]
-        [Column(TypeName = "nvarchar(256)")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// status
-        /// </summary>
-        
-        public bool Enabled { get; set; }
-
-        /// <summary>
-        /// place
-        /// </summary>
-        [Required]
-        public Hall Hall { get; set; }
 
         /// <summary>
         /// Spectacle
         /// </summary>
-        [Required]
         public Spectacle Spectacle { get; set; }
-
-        /// <summary>
-        /// Start date and time
-        /// </summary>
-        [Required]
-        public DateTime StartTime { get; set; }
-
-
-        /// <summary>
-        /// EndTime
-        /// </summary>
-        [Required]
-        public DateTime EndTime { get; set; }
-
         /// <summary>
         /// Description
         /// </summary>
-        [Column(TypeName = "nvarchar(MAX)")]
-        [Required]
+        [Column(TypeName = "nvarchar(1024)")]
         public string Description { get; set; }
 
+        /// <summary>
+        /// Url
+        /// </summary>
+        [Column(TypeName = "nvarchar(2048)")]
+        public string Url { get; set; }
 
         /// <summary>
-        /// Tickets
+        /// ContentUrl
         /// </summary>
-        public ICollection<Ticket> Tickets { get; set; }
-
+        [Column(TypeName = "nvarchar(2048)")]
+        public string ContentUrl { get; set; }
         /// <summary>
         /// LastUpdated - last create or change date
         /// </summary>
