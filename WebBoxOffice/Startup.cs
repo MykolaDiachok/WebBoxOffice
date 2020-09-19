@@ -1,45 +1,77 @@
+using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
-using WebBoxOffice.Data;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using WebBoxOffice.Domain;
+using WebBoxOffice.Identity.Data;
+using WebBoxOffice.Identity.Models;
 
 namespace WebBoxOffice
 {
+    /// <summary>
+    /// Main class
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// XmlCommentsFilePath - path to xml file for documentation
+        /// </summary>
+        public string XmlCommentsFilePath
+        {
+            get
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                return xmlPath;
+            }
+        }
+
+        /// <summary>
+        /// ConfigureServices - This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
+                c.IncludeXmlComments(XmlCommentsFilePath);
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebBoxOffice API", Version = "v1" });
             });
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<WebBoxOfficeIdentityDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<WebBoxOfficeUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<WebBoxOfficeRole>()
+                .AddEntityFrameworkStores<WebBoxOfficeIdentityDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<WebBoxOfficeUser, WebBoxOfficeIdentityDbContext>();
+                
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
@@ -52,9 +84,21 @@ namespace WebBoxOffice
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="identityDbContext"></param>
+        /// <param name="logger"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            WebBoxOfficeIdentityDbContext identityDbContext, ILogger<Startup> logger)
         {
+            if (!((RelationalDatabaseCreator) identityDbContext.Database.GetService<IDatabaseCreator>()).Exists())
+            {
+                logger.LogInformation("Identity Database not found, will create new...");
+                identityDbContext.Database.EnsureCreated();
+            }
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

@@ -1,8 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebBoxOffice.Data.Migrations
+namespace WebBoxOffice.Identity.Data.Migrations
 {
+    /// <summary>
+    /// create db, and migration worker
+    /// </summary>
     public partial class CreateIdentitySchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

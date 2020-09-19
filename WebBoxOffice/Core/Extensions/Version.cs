@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebBoxOffice.Core.Extensions
 {
+    /// <summary>
+    /// Class version
+    /// </summary>
     public static class Version
     {
         /// <summary>

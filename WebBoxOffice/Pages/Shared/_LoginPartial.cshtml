@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using WebBoxOffice.Domain
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@using WebBoxOffice.Identity.Models
+@inject SignInManager<WebBoxOfficeUser> SignInManager
+@inject UserManager<WebBoxOfficeUser> UserManager
 
 @{
     string returnUrl = null;
