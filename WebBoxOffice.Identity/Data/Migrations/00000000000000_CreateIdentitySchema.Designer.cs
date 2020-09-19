@@ -13,7 +13,9 @@ namespace WebBoxOffice.Identity.Data.Migrations
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
+
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -354,6 +356,7 @@ namespace WebBoxOffice.Identity.Data.Migrations
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         }
     }
 }

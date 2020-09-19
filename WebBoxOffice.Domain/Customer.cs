@@ -15,7 +15,8 @@ namespace WebBoxOffice.Domain
         /// </summary>
         [Column(TypeName = "nvarchar(450)")]
         [Required]
-        public string Id { get; set; }
+        [Key]
+        public string UserId { get; set; }
 
         /// <summary>
         /// Name
