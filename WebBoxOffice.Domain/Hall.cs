@@ -9,7 +9,7 @@ namespace WebBoxOffice.Domain
     /// 
     /// </summary>
     [Table("Halls")]
-    public class Hall
+    public class Hall:IDataBoxOffice
     {
         /// <summary>
         /// 
@@ -35,7 +35,7 @@ namespace WebBoxOffice.Domain
         /// <summary>
         /// 
         /// </summary>
-        public BoxOffice BoxOffice { get; set; }
+        public DataBoxOffice DataBoxOffice { get; set; }
         /// <summary>
         /// LastUpdated - last create or change date
         /// </summary>
@@ -46,5 +46,11 @@ namespace WebBoxOffice.Domain
         /// </summary>
         [Timestamp]
         public byte[] Timestamp { get; set; }
+        /// <summary>
+        /// user who changed last
+        /// </summary>
+        [Column(TypeName = "nvarchar(450)")]
+        
+        public string LastUserId { get; set; }
     }
 }

@@ -1,15 +1,17 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using WebBoxOffice.Core;
 using WebBoxOffice.Core.Services;
 using WebBoxOffice.Data;
 using WebBoxOffice.Domain;
+using WebBoxOffice.Identity.Models;
 
 namespace WebBoxOffice.Controllers.GL
 {
     /// <summary>
     /// BoxOfficeController
     /// </summary>
-    public class BoxOfficeController : GlController<BoxOffice>
+    public class BoxOfficeController : GlController<DataBoxOffice>
     {
         /// <summary>
         /// ctor
@@ -17,7 +19,8 @@ namespace WebBoxOffice.Controllers.GL
         /// <param name="boxOfficeDbContext"></param>
         /// <param name="uriService"></param>
         /// <param name="logger"></param>
-        public BoxOfficeController(WebBoxOfficeDbContext boxOfficeDbContext, IUriService uriService, ILogger<BoxOffice> logger) : base(boxOfficeDbContext, uriService, logger)
+        /// <param name="userManager"></param>
+        public BoxOfficeController(WebBoxOfficeDbContext boxOfficeDbContext, IUriService uriService, ILogger<DataBoxOffice> logger, UserManager<WebBoxOfficeUser> userManager) : base(boxOfficeDbContext, uriService, logger, userManager)
         {
         }
     }

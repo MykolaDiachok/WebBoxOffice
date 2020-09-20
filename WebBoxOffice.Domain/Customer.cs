@@ -8,14 +8,20 @@ namespace WebBoxOffice.Domain
     /// Customer
     /// </summary>
     [Table("Customers")]
-    public class Customer
+    public class Customer: IDataBoxOffice
     {
         /// <summary>
         /// Id
         /// </summary>
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+
+        /// <summary>
+        /// UserId
+        /// </summary>
         [Column(TypeName = "nvarchar(450)")]
         [Required]
-        [Key]
         public string UserId { get; set; }
 
         /// <summary>
@@ -44,6 +50,12 @@ namespace WebBoxOffice.Domain
         /// </summary>
         [Timestamp]
         public byte[] Timestamp { get; set; }
+
+        /// <summary>
+        /// user who changed last
+        /// </summary>
+        [Column(TypeName = "nvarchar(450)")]
+        public string LastUserId { get; set; }
     }
 }
 

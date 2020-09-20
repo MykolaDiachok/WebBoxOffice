@@ -9,7 +9,7 @@ namespace WebBoxOffice.Domain
     /// Spectacles schedules
     /// </summary>
     [Table("Schedules")]
-    public class Schedule
+    public class Schedule:IDataBoxOffice
     {
         /// <summary>
         /// Id
@@ -78,5 +78,10 @@ namespace WebBoxOffice.Domain
         /// </summary>
         [Timestamp]
         public byte[] Timestamp { get; set; }
+        /// <summary>
+        /// user who changed last
+        /// </summary>
+        [Column(TypeName = "nvarchar(450)")]
+        public string LastUserId { get; set; }
     }
 }

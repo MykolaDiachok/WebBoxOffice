@@ -11,7 +11,7 @@ namespace WebBoxOffice.Data
         /// <summary>
         /// BoxOffices
         /// </summary>
-        public DbSet<BoxOffice> BoxOffices { get; set; }
+        public DbSet<DataBoxOffice> BoxOffices { get; set; }
 
         /// <summary>
         /// Customers
@@ -70,8 +70,8 @@ namespace WebBoxOffice.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<BoxOffice>().Property(x => x.Id).ValueGeneratedOnAdd().HasDefaultValueSql("NEWID()");
-            modelBuilder.Entity<BoxOffice>().Property(x => x.LastUpdated).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GetUtcDate()");
+            modelBuilder.Entity<DataBoxOffice>().Property(x => x.Id).ValueGeneratedOnAdd().HasDefaultValueSql("NEWID()");
+            modelBuilder.Entity<DataBoxOffice>().Property(x => x.LastUpdated).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GetUtcDate()");
 
             modelBuilder.Entity<Customer>().Property(x => x.LastUpdated).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("GetUtcDate()");
 

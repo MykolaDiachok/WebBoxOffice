@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebBoxOffice.Core;
 using WebBoxOffice.Core.Services;
 using WebBoxOffice.Data;
 using WebBoxOffice.Domain;
+using WebBoxOffice.Identity.Models;
 
 namespace WebBoxOffice.Controllers.GL
 {
@@ -24,7 +26,8 @@ namespace WebBoxOffice.Controllers.GL
         /// <param name="boxOfficeDbContext"></param>
         /// <param name="uriService"></param>
         /// <param name="logger"></param>
-        public CustomerController(WebBoxOfficeDbContext boxOfficeDbContext, IUriService uriService, ILogger<Customer> logger) : base(boxOfficeDbContext, uriService, logger)
+        /// <param name="userManager"></param>
+        public CustomerController(WebBoxOfficeDbContext boxOfficeDbContext, IUriService uriService, ILogger<Customer> logger, UserManager<WebBoxOfficeUser> userManager) : base(boxOfficeDbContext, uriService, logger, userManager)
         {
         }
     }

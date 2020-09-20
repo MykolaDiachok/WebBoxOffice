@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using WebBoxOffice.Core;
 using WebBoxOffice.Core.Services;
 using WebBoxOffice.Data;
 using WebBoxOffice.Domain;
+using WebBoxOffice.Identity.Models;
 
 namespace WebBoxOffice.Controllers.GL
 {
@@ -13,12 +15,13 @@ namespace WebBoxOffice.Controllers.GL
     public class HallController : GlController<Hall>
     {
         /// <summary>
-        /// ctor
+        /// HallController
         /// </summary>
         /// <param name="boxOfficeDbContext"></param>
         /// <param name="uriService"></param>
         /// <param name="logger"></param>
-        public HallController(WebBoxOfficeDbContext boxOfficeDbContext, IUriService uriService, ILogger<Hall> logger) : base(boxOfficeDbContext, uriService, logger)
+        /// <param name="userManager"></param>
+        public HallController(WebBoxOfficeDbContext boxOfficeDbContext, IUriService uriService, ILogger<Hall> logger, UserManager<WebBoxOfficeUser> userManager) : base(boxOfficeDbContext, uriService, logger, userManager)
         {
         }
     }

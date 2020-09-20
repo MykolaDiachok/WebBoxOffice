@@ -9,7 +9,7 @@ namespace WebBoxOffice.Domain
     /// 
     /// </summary>
     [Table("BoxOffices")]
-    public class BoxOffice
+    public class DataBoxOffice : IDataBoxOffice
     {
         /// <summary>
         /// 
@@ -42,6 +42,12 @@ namespace WebBoxOffice.Domain
         /// </summary>
         [Timestamp]
         public byte[] Timestamp { get; set; }
+
+        /// <summary>
+        /// user who changed last
+        /// </summary>
+        [Column(TypeName = "nvarchar(450)")]
+        public string LastUserId { get; set; }
     }
 }
 
