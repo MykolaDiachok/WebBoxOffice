@@ -20,7 +20,7 @@ using WebBoxOffice.Identity.Models;
 
 namespace WebBoxOffice.Controllers.GL
 {
-
+    //TODO: add pagination with data filters
     /// <summary>
     /// Schedule
     /// </summary>

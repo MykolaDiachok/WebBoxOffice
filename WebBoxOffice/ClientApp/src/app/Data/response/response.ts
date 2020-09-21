@@ -1,13 +1,13 @@
-export interface Iresponse{
+export interface Iresponse {
     pageNumber: number;
     pageSize: number;
     firstPage: string;
     lastPage: string;
     totalPages: number;
-    totalRecords: number,
+    totalRecords: number;
     nextPage: string;
     previousPage: string;
-    data:any;
+    data: any;
     succeeded: boolean;
     errors: any;
     message: any;

@@ -1,5 +1,5 @@
-import { IHall } from "../hall/hall";
-import { ISpectacle } from "../spectacle/spectacle";
+import { IHall } from '../hall/hall';
+import { ISpectacle } from '../spectacle/spectacle';
 
 export interface ISchedule {
     id: string;
