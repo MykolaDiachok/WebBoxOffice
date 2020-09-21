@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,22 +16,37 @@ using WebBoxOffice.Data;
 using WebBoxOffice.Domain;
 using WebBoxOffice.Identity.Models;
 
-namespace WebBoxOffice.Core
+namespace WebBoxOffice.Controllers.GL.Abstract
 {
     /// <summary>
     /// GLController
     /// </summary>
     /// <typeparam name="T"></typeparam>
     //TODO: add API version
+    //TODO: add Include nested classes
+    //TODO: Auth and permissions
+
     [Route("api/GL/[controller]")]
     [ApiController]
     
     public abstract class GlController<T>: ControllerBase where T : class, IDataBoxOffice
     {
-        private readonly WebBoxOfficeDbContext _boxOfficeDbContext;
-        private readonly IUriService _uriService;
-        private readonly ILogger<T> _logger;
-        private readonly UserManager<WebBoxOfficeUser> _userManager;
+        /// <summary>
+        /// BoxOfficeDbContext
+        /// </summary>
+        protected readonly WebBoxOfficeDbContext BoxOfficeDbContext;
+        /// <summary>
+        /// UriService
+        /// </summary>
+        protected readonly IUriService UriService;
+        /// <summary>
+        /// Logger
+        /// </summary>
+        protected readonly ILogger<T> Logger;
+        /// <summary>
+        /// UserManager
+        /// </summary>
+        protected readonly UserManager<WebBoxOfficeUser> UserManager;
 
         /// <summary>
         /// ctor
@@ -46,10 +57,10 @@ namespace WebBoxOffice.Core
         /// <param name="userManager"></param>
         protected GlController(WebBoxOfficeDbContext boxOfficeDbContext, IUriService uriService,ILogger<T> logger, UserManager<WebBoxOfficeUser> userManager)
         {
-            _boxOfficeDbContext = boxOfficeDbContext;
-            _uriService = uriService;
-            _logger = logger;
-            _userManager = userManager;
+            BoxOfficeDbContext = boxOfficeDbContext;
+            UriService = uriService;
+            Logger = logger;
+            UserManager = userManager;
         }
 
 
@@ -64,7 +75,7 @@ namespace WebBoxOffice.Core
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public virtual async Task<ActionResult<T>> GetById(Guid id, CancellationToken ct)
         {
-            var entity = await _boxOfficeDbContext.Set<T>().Where(x=>x.Id==id).FirstOrDefaultAsync(ct);
+            var entity = await BoxOfficeDbContext.Set<T>().Where(x=>x.Id==id).FirstOrDefaultAsync(ct);
             if (entity == null)
                 return NotFound();
             return Ok(new Response<T>(entity));
@@ -81,12 +92,12 @@ namespace WebBoxOffice.Core
         {
             var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var pagedData = await _boxOfficeDbContext.Set<T>()
+            var pagedData = await BoxOfficeDbContext.Set<T>()
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
                 .ToListAsync(ct);
-            var totalRecords = await _boxOfficeDbContext.Set<T>().CountAsync(ct);
-            var pagedResponse = PaginationHelper.CreatePagedReponse<T>(pagedData, validFilter, totalRecords, _uriService, route);
+            var totalRecords = await BoxOfficeDbContext.Set<T>().CountAsync(ct);
+            var pagedResponse = PaginationHelper.CreatePagedReponse<T>(pagedData, validFilter, totalRecords, UriService, route);
             return Ok(pagedResponse);
         }
 
@@ -101,13 +112,13 @@ namespace WebBoxOffice.Core
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public virtual async Task<IActionResult> DeleteById(Guid id, CancellationToken ct)
         {
-            var entity = await _boxOfficeDbContext.Set<T>().Where(x => x.Id == id).FirstOrDefaultAsync(ct);
+            var entity = await BoxOfficeDbContext.Set<T>().Where(x => x.Id == id).FirstOrDefaultAsync(ct);
             if (entity == null)
             {
                 return NotFound();
             }
-            _boxOfficeDbContext.Set<T>().Remove(entity);
-            await _boxOfficeDbContext.SaveChangesAsync(ct);
+            BoxOfficeDbContext.Set<T>().Remove(entity);
+            await BoxOfficeDbContext.SaveChangesAsync(ct);
             return Ok();
         }
 
@@ -127,10 +138,10 @@ namespace WebBoxOffice.Core
             {
                 return BadRequest(ModelState);
             }
-            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var user = await UserManager.GetUserAsync(HttpContext.User);
             dataBoxOffice.LastUserId = user!=null ? user.Id : "Anonymous";
-            await _boxOfficeDbContext.AddAsync(dataBoxOffice, ct);
-            await _boxOfficeDbContext.SaveChangesAsync(ct);
+            await BoxOfficeDbContext.AddAsync(dataBoxOffice, ct);
+            await BoxOfficeDbContext.SaveChangesAsync(ct);
             return CreatedAtAction(nameof(GetById), new {id = dataBoxOffice.Id}, dataBoxOffice);
         }
 
@@ -151,7 +162,7 @@ namespace WebBoxOffice.Core
             {
                 return BadRequest("Id doesn't match");
             }
-            var entity = await _boxOfficeDbContext.Set<T>().Where(x => x.Id == id).FirstOrDefaultAsync(ct);
+            var entity = await BoxOfficeDbContext.Set<T>().Where(x => x.Id == id).FirstOrDefaultAsync(ct);
             if (entity == null)
                 return NotFound();
 
@@ -167,10 +178,10 @@ namespace WebBoxOffice.Core
                 propertyInfo.SetValue(entity, value);
             }
             entity.LastUpdated = DateTime.UtcNow;
-            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var user = await UserManager.GetUserAsync(HttpContext.User);
             dataBoxOffice.LastUserId = user != null ? user.Id : "Anonymous";
-            _boxOfficeDbContext.Update(entity);
-            await _boxOfficeDbContext.SaveChangesAsync(ct);
+            BoxOfficeDbContext.Update(entity);
+            await BoxOfficeDbContext.SaveChangesAsync(ct);
             return CreatedAtRoute(nameof(GetById), new { id = dataBoxOffice.Id }, dataBoxOffice);
         }
 

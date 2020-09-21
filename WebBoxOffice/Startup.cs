@@ -21,9 +21,14 @@ using WebBoxOffice.Identity.Models;
 
 namespace WebBoxOffice
 {
+    //TODO: add API version
+    //TODO: Auth and permissions
+    //TODO: add cache service
+
     /// <summary>
     /// Main class
     /// </summary>
+    /// 
     public class Startup
     {
         /// <summary>
@@ -91,6 +96,7 @@ namespace WebBoxOffice
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
+                //.AddNewtonsoftJson(option=>option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

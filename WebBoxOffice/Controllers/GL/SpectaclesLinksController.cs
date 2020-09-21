@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using WebBoxOffice.Controllers.GL.Abstract;
 using WebBoxOffice.Core;
 using WebBoxOffice.Core.Services;
 using WebBoxOffice.Data;

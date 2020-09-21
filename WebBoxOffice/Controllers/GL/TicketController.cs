@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebBoxOffice.Controllers.GL.Abstract;
 using WebBoxOffice.Core;
 using WebBoxOffice.Core.Services;
 using WebBoxOffice.Data;
