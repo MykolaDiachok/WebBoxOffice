@@ -145,7 +145,7 @@ namespace WebBoxOffice.Core
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public virtual async Task<IActionResult> UpdateOne(Guid id, [FromBody] T dataBoxOffice, CancellationToken ct)
+        public virtual async Task<IActionResult> UpdateOne([FromRoute]Guid id, [FromBody] T dataBoxOffice, CancellationToken ct)
         {
             if (dataBoxOffice.Id != id)
             {
@@ -171,7 +171,7 @@ namespace WebBoxOffice.Core
             dataBoxOffice.LastUserId = user != null ? user.Id : "Anonymous";
             _boxOfficeDbContext.Update(entity);
             await _boxOfficeDbContext.SaveChangesAsync(ct);
-            return CreatedAtAction(nameof(GetById), new { id = dataBoxOffice.Id }, dataBoxOffice);
+            return CreatedAtRoute(nameof(GetById), new { id = dataBoxOffice.Id }, dataBoxOffice);
         }
 
     }

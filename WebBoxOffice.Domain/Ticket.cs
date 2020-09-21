@@ -21,6 +21,10 @@ namespace WebBoxOffice.Domain
         /// Schedule
         /// </summary>
         public virtual Schedule Schedule { get; set; }
+        /// <summary>
+        /// fkey ScheduleId
+        /// </summary>
+        public virtual Guid ScheduleId { get; set; }
 
         /// <summary>
         /// Paid

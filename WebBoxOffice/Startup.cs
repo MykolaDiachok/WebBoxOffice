@@ -120,6 +120,7 @@ namespace WebBoxOffice
             {
                 logger.LogInformation("Database not found, will create new...");
                 boxOfficeDbContext.Database.EnsureCreated();
+                new AddNewDbRecords(boxOfficeDbContext).AddNewRecords();
             }
             app.UseSwagger();
             app.UseSwaggerUI(c =>

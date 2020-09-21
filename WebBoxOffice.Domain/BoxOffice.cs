@@ -14,13 +14,12 @@ namespace WebBoxOffice.Domain
         /// <summary>
         /// 
         /// </summary>
-        [Key]
+        [Key, ForeignKey("DataBoxOfficeId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [Required]
         [Column(TypeName = "nvarchar(256)")]
         public string Name { get; set; }
         /// <summary>

@@ -38,6 +38,12 @@ namespace WebBoxOffice.Domain
         /// </summary>
         public int Duration { get; set; }
 
+
+        /// <summary>
+        /// Schedules
+        /// </summary>
+        public ICollection<Schedule>  Schedules { get; set; }
+
         /// <summary>
         /// SpectacleLinks
         /// </summary>

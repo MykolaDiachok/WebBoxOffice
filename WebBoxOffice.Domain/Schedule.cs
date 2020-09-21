@@ -20,7 +20,6 @@ namespace WebBoxOffice.Domain
         /// <summary>
         /// 
         /// </summary>
-        [Required]
         [Column(TypeName = "nvarchar(256)")]
         public string Name { get; set; }
 
@@ -33,14 +32,20 @@ namespace WebBoxOffice.Domain
         /// <summary>
         /// place
         /// </summary>
-        [Required]
         public Hall Hall { get; set; }
+        /// <summary>
+        /// fkey Hall
+        /// </summary>
+        public Guid HallId { get; set; }
 
         /// <summary>
         /// Spectacle
         /// </summary>
-        [Required]
         public Spectacle Spectacle { get; set; }
+        /// <summary>
+        /// fkey
+        /// </summary>
+        public Guid SpectacleId { get; set; }
 
         /// <summary>
         /// Start date and time
@@ -52,14 +57,12 @@ namespace WebBoxOffice.Domain
         /// <summary>
         /// EndTime
         /// </summary>
-        [Required]
         public DateTime EndTime { get; set; }
 
         /// <summary>
         /// Description
         /// </summary>
         [Column(TypeName = "nvarchar(MAX)")]
-        [Required]
         public string Description { get; set; }
 
 

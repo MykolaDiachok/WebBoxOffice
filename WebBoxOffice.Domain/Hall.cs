@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
@@ -14,13 +15,12 @@ namespace WebBoxOffice.Domain
         /// <summary>
         /// 
         /// </summary>
-        [Key]
+        [Key, ForeignKey("HallsId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        [Required]
         [Column(TypeName = "nvarchar(256)")]
         public string Name { get; set; }
         /// <summary>
@@ -33,9 +33,18 @@ namespace WebBoxOffice.Domain
         /// </summary>
         public int FreePlaces { get; set; }
         /// <summary>
-        /// 
+        /// DataBoxOffice
         /// </summary>
         public DataBoxOffice DataBoxOffice { get; set; }
+        /// <summary>
+        /// DataBoxOfficeId
+        /// </summary>
+        public Guid DataBoxOfficeId { get; set; }
+
+        /// <summary>
+        /// Schedules
+        /// </summary>
+        public ICollection<Schedule> Schedules { get; set; }
         /// <summary>
         /// LastUpdated - last create or change date
         /// </summary>

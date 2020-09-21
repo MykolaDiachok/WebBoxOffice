@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,24 +22,24 @@ namespace WebBoxOffice.Domain
         /// UserId
         /// </summary>
         [Column(TypeName = "nvarchar(450)")]
-        [Required]
         public string UserId { get; set; }
 
         /// <summary>
         /// Name
         /// </summary>
         [Column(TypeName = "nvarchar(256)")]
-        [Required]
         public string Name { get; set; }
 
         /// <summary>
         /// Surname
         /// </summary>
         [Column(TypeName = "nvarchar(256)")]
-        [Required]
         public string Surname { get; set; }
 
-
+        /// <summary>
+        /// Tickets
+        /// </summary>
+        public ICollection<CustomerTickets> Tickets { get; set; }
         
         /// <summary>
         /// LastUpdated - last create or change date

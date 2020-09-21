@@ -24,6 +24,10 @@ namespace WebBoxOffice.Domain
         /// </summary>
         public Spectacle Spectacle { get; set; }
         /// <summary>
+        /// fkey
+        /// </summary>
+        public Guid SpectacleId { get; set; }
+        /// <summary>
         /// Description
         /// </summary>
         [Column(TypeName = "nvarchar(1024)")]

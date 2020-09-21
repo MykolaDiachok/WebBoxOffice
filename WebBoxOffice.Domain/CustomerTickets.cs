@@ -23,6 +23,10 @@ namespace WebBoxOffice.Domain
         /// </summary>
         public Customer Customer { get; set; }
         /// <summary>
+        /// fkey
+        /// </summary>
+        public Guid CustomerId { get; set; }
+        /// <summary>
         /// Tickets
         /// </summary>
         public ICollection<Ticket> Tickets { get; set; }
